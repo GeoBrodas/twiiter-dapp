@@ -129,4 +129,35 @@ describe('rust-prog', () => {
 
     assert.fail('Should have thrown an error');
   });
+
+  it('fetch all tweets', async () => {
+    const tweetAccounts = await program.account.tweet.all();
+
+    // console.log(tweetAccounts);
+
+    assert.equal(tweetAccounts.length, 3);
+  });
+
+  it('can filter tweets by author', async () => {
+    const authorPublicKey = program.provider.wallet.publicKey;
+    const tweetAccounts = await program.account.tweet.all([
+      {
+        memcmp: {
+          offset: 8, // Discriminator.
+          bytes: authorPublicKey.toBase58(),
+        },
+      },
+    ]);
+
+    console.log(tweetAccounts);
+
+    assert.equal(tweetAccounts.length, 2);
+    assert.ok(
+      tweetAccounts.every((tweetAccount) => {
+        return (
+          tweetAccount.account.author.toBase58() === authorPublicKey.toBase58()
+        );
+      })
+    );
+  });
 });
