@@ -1,5 +1,6 @@
 const anchor = require('@project-serum/anchor');
 const assert = require('assert');
+const bs58 = require('bs58');
 
 describe('rust-prog', () => {
   // Configure the client to use the local cluster.
@@ -157,6 +158,26 @@ describe('rust-prog', () => {
         return (
           tweetAccount.account.author.toBase58() === authorPublicKey.toBase58()
         );
+      })
+    );
+  });
+
+  it('can filter by topic', async () => {
+    const tweetAccounts = await program.account.tweet.all([
+      {
+        memcmp: {
+          offset: 8 + 32 + 8 + 4, // Discriminator.
+          bytes: bs58.encode(Buffer.from('web3')),
+        },
+      },
+    ]);
+
+    console.log(tweetAccounts);
+
+    assert.equal(tweetAccounts.length, 1);
+    assert.ok(
+      tweetAccounts.every((tweetAccount) => {
+        return tweetAccount.account.topic === 'web3';
       })
     );
   });
