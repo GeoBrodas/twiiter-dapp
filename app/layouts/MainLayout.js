@@ -1,3 +1,6 @@
+import { AiFillHome } from 'react-icons/ai';
+import { GrSearchAdvanced } from 'react-icons/gr';
+
 function MainLayout({ children }) {
   return (
     <div className="flex justify-between py-6">
@@ -11,14 +14,23 @@ function MainLayout({ children }) {
           Twitter
         </div>
 
-        <button className="side-btn">Home</button>
-        <button className="side-btn">Trending</button>
-        <button className="side-btn">Search</button>
+        <button className="side-btn">
+          <AiFillHome className="icon" />
+          Home
+        </button>
+        <button className="side-btn">
+          <AiFillHome className="icon" />
+          Trending
+        </button>
+        <button className="side-btn">
+          <GrSearchAdvanced className="icon" />
+          Search
+        </button>
       </div>
       <div className="mx-4 w-2/3">{children}</div>
       <div className="mx-auto w-1/3"></div>
     </div>
-  )
+  );
 }
 
-export default MainLayout
+export default MainLayout;

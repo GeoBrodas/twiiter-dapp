@@ -1,7 +1,6 @@
 function Tweet({ tweet }) {
   // generate a random color
-  const color = `hsl(${Math.random() * 360}, 100%, 50%)`
-  console.log(color)
+  const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
 
   return (
     <div className="my-6">
@@ -20,7 +19,7 @@ function Tweet({ tweet }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Tweet
+export default Tweet;

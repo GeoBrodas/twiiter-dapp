@@ -1,4 +1,5 @@
-import Tweets from '../components/Tweets'
+import Head from 'next/head';
+import Tweets from '../components/Tweets';
 
 function Home() {
   const fakeTweets = [
@@ -72,13 +73,16 @@ function Home() {
       content:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod, nisl eget consectetur tempor, nisl nunc ultrices eros, eu porttitor nisl nunc euismod nunc. Donec euismod',
     },
-  ]
+  ];
 
   return (
     <div className="h-screen flex-grow flex-col items-center justify-center overflow-y-auto py-10">
+      <Head>
+        <title>Home: Twitter + Solana</title>
+      </Head>
       <Tweets tweets={fakeTweets} />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
