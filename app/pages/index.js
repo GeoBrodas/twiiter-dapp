@@ -76,7 +76,7 @@ function Home() {
   ];
 
   return (
-    <div className="h-screen flex-grow flex-col items-center justify-center overflow-y-auto py-10">
+    <div className="h-screen flex-grow flex-col items-center justify-center overflow-y-auto py-10 scrollbar">
       <Head>
         <title>Home: Twitter + Solana</title>
       </Head>

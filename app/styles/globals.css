@@ -7,9 +7,29 @@ body {
 }
 
 .side-btn {
-  @apply my-4 mx-auto flex h-auto w-[10rem] items-center justify-center rounded-3xl bg-orange-500 p-4 text-center font-sans text-lg font-semibold text-white;
+  @apply my-4 mx-auto flex w-[10.7rem] items-center rounded-3xl bg-orange-500 p-3 text-center font-sans text-lg font-semibold text-white;
 }
 
 .icon {
-  @apply mr-2 h-5 w-5 text-black;
+  @apply mr-4 h-5 w-5 text-black;
+}
+
+.wallet-adapter-dropdown {
+  @apply w-full;
+}
+
+.wallet-adapter-button {
+  @apply w-full rounded-full;
+}
+
+.wallet-adapter-button-trigger {
+  @apply h-12 w-[10.7rem] justify-center rounded-3xl bg-orange-500 !important;
+}
+
+.wallet-adapter-dropdown-list {
+  @apply top-auto bottom-full md:top-full md:bottom-auto md:left-0 md:right-auto;
+}
+
+.wallet-adapter-dropdown-list-active {
+  @apply -translate-y-3 transform md:translate-y-3;
 }

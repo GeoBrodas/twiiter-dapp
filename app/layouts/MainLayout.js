@@ -1,3 +1,7 @@
+import {
+  WalletDisconnectButton,
+  WalletMultiButton,
+} from '@solana/wallet-adapter-react-ui';
 import { AiFillHome } from 'react-icons/ai';
 import { GrSearchAdvanced } from 'react-icons/gr';
 
@@ -11,7 +15,7 @@ function MainLayout({ children }) {
           }}
           className="text mx-auto my-10 text-3xl"
         >
-          Twitter
+          🐤 + 🛢
         </div>
 
         <button className="side-btn">
@@ -26,6 +30,10 @@ function MainLayout({ children }) {
           <GrSearchAdvanced className="icon" />
           Search
         </button>
+
+        <div className="mx-auto my-4">
+          <WalletMultiButton />
+        </div>
       </div>
       <div className="mx-4 w-2/3">{children}</div>
       <div className="mx-auto w-1/3"></div>

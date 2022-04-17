@@ -4,7 +4,10 @@ const Context = createContext();
 
 const Provider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [tweet, setTweet] = useState('');
+  const [tweet, setTweet] = useState({
+    content: '',
+    topic: '',
+  });
 
   const exposed = {
     isLoading,
