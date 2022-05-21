@@ -33,7 +33,7 @@ function TweetInput() {
         type="text"
         placeholder="Whats tweeting?..."
         className="my-4 h-[40px] w-2/3 select-none border-0 bg-transparent px-6 text-lg text-orange-500 scrollbar focus:outline-none"
-        value={tweet.content}
+        value={tweet?.content}
         onChange={(e) => setTweet({ ...tweet, content: e.target.value })}
       />
 
@@ -45,7 +45,7 @@ function TweetInput() {
               #
             </div>
             <input
-              value={tweet.topic}
+              value={tweet?.topic}
               onChange={(e) =>
                 setTweet({
                   ...tweet,
@@ -60,7 +60,7 @@ function TweetInput() {
         </div>
 
         <div className="flex w-auto items-center space-x-6">
-          <p className="text-gray-500">{280 - tweet.content.length}</p>
+          <p className="text-gray-500">{280 - tweet?.content.length}</p>
           <button
             className="h-auto w-fit rounded-3xl bg-orange-500 px-4 py-2 font-bold text-white"
             onClick={sendTweet}
