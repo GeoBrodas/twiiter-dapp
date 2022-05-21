@@ -2,15 +2,17 @@ import Tweet from './ui/Tweet';
 import TweetInput from './TweetInput';
 import { useWallet } from '@solana/wallet-adapter-react';
 
-function Tweets({ tweets }) {
+function Tweets({ tweets, visibleInput }) {
   const { connected } = useWallet();
 
   return (
     <div className="w-full">
-      {connected && <TweetInput />}
-      {tweets.map((tweet) => (
-        <Tweet key={tweet.id} tweet={tweet} />
-      ))}
+      {connected && visibleInput && <TweetInput />}
+      {tweets
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .map((tweet) => (
+          <Tweet key={tweet.timestamp} tweet={tweet} />
+        ))}
     </div>
   );
 }

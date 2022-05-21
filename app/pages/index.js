@@ -20,9 +20,9 @@ function Home() {
   const { program } = useTweet();
 
   useEffect(async () => {
-    let fechedTweets;
     setLoading(true);
 
+    let fechedTweets;
     fechedTweets = await program.account.tweet.all();
     setTweets(fechedTweets);
     setLoading(false);
@@ -34,15 +34,36 @@ function Home() {
 
   // console.log(tweets);
 
-  const fakeTweets = tweets?.map((tweet) => ({
-    publicKey: tweet.publicKey.toBase58(),
-    content: tweet.account.content,
-    author: tweet.account.author.toBase58(),
-    createdAt: dayjs
-      .unix(tweet.account.timestamp.toString())
-      .format('YYYY-MM-DD'),
-    createdAgo: dayjs.unix(tweet.account.timestamp.toString()).fromNow(),
-  }));
+  // make a constructor function for Tweet model
+  class Tweet {
+    constructor(tweet) {
+      this.publicKey = tweet.publicKey.toBase58();
+      this.content = tweet.account.content;
+      this.author = tweet.account.author.toBase58();
+      this.createdAt = dayjs
+        .unix(tweet.account.timestamp.toString())
+        .format('YYYY-MM-DD');
+      this.createdAgo = dayjs
+        .unix(tweet.account.timestamp.toString())
+        .fromNow();
+
+      this.timestamp = tweet.account.timestamp.toNumber();
+    }
+  }
+
+  const fakeTweets = tweets?.map((tweet) => {
+    return new Tweet(tweet);
+  });
+
+  // const fakeTweets = tweets?.map((tweet) => ({
+  //   publicKey: tweet.publicKey.toBase58(),
+  //   content: tweet.account.content,
+  //   author: tweet.account.author.toBase58(),
+  //   createdAt: dayjs
+  //     .unix(tweet.account.timestamp.toString())
+  //     .format('YYYY-MM-DD'),
+  //   createdAgo: dayjs.unix(tweet.account.timestamp.toString()).fromNow(),
+  // }));
 
   console.log(fakeTweets);
 
@@ -52,7 +73,7 @@ function Home() {
         <title>Home: Twitter + Solana</title>
       </Head>
 
-      <Tweets tweets={fakeTweets} />
+      <Tweets visibleInput={true} tweets={fakeTweets} />
     </div>
   );
 }

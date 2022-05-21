@@ -4,6 +4,7 @@ import { AiFillHome } from 'react-icons/ai';
 import { FiTrendingUp } from 'react-icons/fi';
 import { CgProfile } from 'react-icons/cg';
 import { GrSearchAdvanced } from 'react-icons/gr';
+import Link from 'next/link';
 
 function MainLayout({ children }) {
   const { connected } = useWallet();
@@ -19,10 +20,13 @@ function MainLayout({ children }) {
         >
           🐤 + 🛢
         </div>
-        <button className="side-btn">
-          <AiFillHome className="icon" />
-          Home
-        </button>
+
+        <Link href="/">
+          <button className="side-btn">
+            <AiFillHome className="icon" />
+            Home
+          </button>
+        </Link>
 
         {/* active only if "connected" */}
         {connected && (
