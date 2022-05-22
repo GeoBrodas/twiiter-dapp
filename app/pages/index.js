@@ -1,16 +1,13 @@
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
-import { clusterApiUrl, Connection, PublicKey } from '@solana/web3.js';
 import Head from 'next/head';
 import Tweets from '../components/Tweets';
-import { AnchorProvider, Program } from '@project-serum/anchor';
 import { useEffect, useState } from 'react';
 
-import idl from '../utils/idl.json';
 import { useTweet } from '../context/useTweet';
 import dayjs from 'dayjs';
 
+import { Tweet } from '../utils/models';
+
 function Home() {
-  const wallet = useAnchorWallet();
   var relativeTime = require('dayjs/plugin/relativeTime');
   dayjs.extend(relativeTime);
 
@@ -35,21 +32,6 @@ function Home() {
   // console.log(tweets);
 
   // make a constructor function for Tweet model
-  class Tweet {
-    constructor(tweet) {
-      this.publicKey = tweet.publicKey.toBase58();
-      this.content = tweet.account.content;
-      this.author = tweet.account.author.toBase58();
-      this.createdAt = dayjs
-        .unix(tweet.account.timestamp.toString())
-        .format('YYYY-MM-DD');
-      this.createdAgo = dayjs
-        .unix(tweet.account.timestamp.toString())
-        .fromNow();
-
-      this.timestamp = tweet.account.timestamp.toNumber();
-    }
-  }
 
   const fakeTweets = tweets?.map((tweet) => {
     return new Tweet(tweet);
@@ -65,7 +47,7 @@ function Home() {
   //   createdAgo: dayjs.unix(tweet.account.timestamp.toString()).fromNow(),
   // }));
 
-  console.log(fakeTweets);
+  // console.log(fakeTweets);
 
   return (
     <div className="h-screen flex-grow flex-col items-center justify-center overflow-y-auto py-10 scrollbar">

@@ -34,6 +34,7 @@ const ContextProvider = ({ children }) => {
 
   const opts = {
     preflightCommitment: 'processed',
+    commitment: 'processed',
   };
 
   // const connection = new Connection(network, opts.preflightCommitment);

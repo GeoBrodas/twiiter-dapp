@@ -1,3 +1,5 @@
+import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes';
+
 export function authorFilter(authorPublicKey) {
   return {
     memcmp: {

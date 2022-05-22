@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import { useTweet } from '../context/useTweet';
 import { changeStringToSlug } from '../helpers/slug-helper';
 
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { web3 } from '@project-serum/anchor';
+import { useAnchorWallet } from '@solana/wallet-adapter-react';
+
 function TweetInput() {
-  const { tweet, setTweet } = useTweet();
+  const { tweet, setTweet, program } = useTweet();
+  const wallet = useAnchorWallet();
+  const [loading, setLoading] = useState(false);
 
   function handleKeyDown(e) {
     e.target.style.height = 'inherit';
@@ -11,16 +18,40 @@ function TweetInput() {
     // e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`;
   }
 
-  async function sendTweet(e) {
+  async function sendTweet() {
     if (!tweet.content) return alert('Tweet is empty');
+
+    // console.log(wallet);
 
     if (tweet.content.length > 280) return alert('Tweet is too long');
 
+    setLoading(true);
+
+    const tweetKey = web3.Keypair.generate();
+
     console.log(tweet);
-    setTweet({
-      content: '',
-      topic: '',
-    });
+
+    try {
+      await program.rpc.sendTweet(tweet.topic, tweet.content, {
+        accounts: {
+          author: wallet.publicKey,
+          tweet: tweetKey.publicKey,
+          systemProgram: web3.SystemProgram.programId,
+        },
+        signers: [tweet],
+      });
+
+      setLoading(false);
+      console.log(tweet);
+      setTweet({
+        content: '',
+        topic: '',
+      });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      return alert('Error sending tweet');
+    }
   }
 
   return (
@@ -65,7 +96,11 @@ function TweetInput() {
             className="h-auto w-fit rounded-3xl bg-orange-500 px-4 py-2 font-bold text-white"
             onClick={sendTweet}
           >
-            Tweet
+            {loading ? (
+              <AiOutlineLoading3Quarters className="h- w-5 animate-spin text-black" />
+            ) : (
+              'Tweet'
+            )}
           </button>
         </div>
       </div>

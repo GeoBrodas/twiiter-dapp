@@ -8,30 +8,18 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import idl from '../../utils/idl.json';
 
 import Tweets from '../../components/Tweets';
+import { Tweet } from '../../utils/models';
 
 function ProfilePage({ tweets }) {
   dayjs.extend(relativeTime);
   const parsedTweets = JSON.parse(tweets);
-  //   console.log(parsedTweets);
-
-  //   class Tweet {
-  //     constructor(tweet) {
-  //       this.publicKey = tweet.publicKey;
-  //       this.content = tweet.account.content;
-  //       this.author = tweet.account.author;
-  //       this.createdAt = dayjs.unix(tweet.account.timestamp).format('YYYY-MM-DD');
-  //       this.createdAgo = dayjs.unix(tweet.account.timestamp).fromNow();
-
-  //       this.timestamp = tweet.account.timestamp.toNumber();
-  //     }
-  //   }
 
   console.log(parsedTweets);
 
   return (
     <div>
       <p className="my-4 ml-6 text-lg font-semibold">
-        Profile {parsedTweets[0].publicKey.slice(0, 7)}...{' '}
+        Profile {parsedTweets[0].author.slice(0, 7)}...{' '}
       </p>
 
       <Tweets visibleInput={false} tweets={parsedTweets} />
@@ -40,8 +28,6 @@ function ProfilePage({ tweets }) {
 }
 
 export async function getServerSideProps(context) {
-  //   console.log(context.params.wallet);
-
   const { wallet } = context.params;
   console.log(wallet);
 
@@ -56,8 +42,6 @@ export async function getServerSideProps(context) {
   const opts = {
     preflightCommitment: 'processed',
   };
-
-  // const connection = new Connection(network, opts.preflightCommitment);
 
   const getProvider = () => {
     const provider = new AnchorProvider(
@@ -74,27 +58,11 @@ export async function getServerSideProps(context) {
 
   let program = new Program(idl, programId, provider);
 
-  console.log(authorFilter(wallet));
+  // console.log(authorFilter(wallet));
 
   const authorTweets = await program.account.tweet.all([authorFilter(wallet)]);
 
-  console.log(authorTweets);
-
-  class Tweet {
-    constructor(tweet) {
-      this.publicKey = tweet.publicKey.toBase58();
-      this.content = tweet.account.content;
-      this.author = tweet.account.author.toBase58();
-      this.createdAt = dayjs
-        .unix(tweet.account.timestamp.toString())
-        .format('YYYY-MM-DD');
-      this.createdAgo = dayjs
-        .unix(tweet.account.timestamp.toString())
-        .fromNow();
-
-      this.timestamp = tweet.account.timestamp.toNumber();
-    }
-  }
+  // console.log(authorTweets);
 
   const modelTweet = authorTweets.map((tweet) => {
     return new Tweet(tweet);

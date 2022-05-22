@@ -25,6 +25,8 @@ function Tweet({ tweet }) {
             </div>
           </Link>
 
+          <div className="italic text-gray-400">#{tweet.topic}</div>
+
           {tweet.content.length > 120
             ? tweet.content.slice(0, 120)
             : tweet.content}

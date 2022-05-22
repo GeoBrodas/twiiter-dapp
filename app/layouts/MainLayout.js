@@ -39,10 +39,14 @@ function MainLayout({ children }) {
           <GrSearchAdvanced className="icon" />
           Users
         </button>
-        <button className="side-btn">
-          <FiTrendingUp className="icon" />
-          Topics
-        </button>
+
+        <Link href="/topics">
+          <button className="side-btn">
+            <FiTrendingUp className="icon" />
+            Topics
+          </button>
+        </Link>
+
         <div className="mx-auto my-4">
           <WalletMultiButton />
         </div>
