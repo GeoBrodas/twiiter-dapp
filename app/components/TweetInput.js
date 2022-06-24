@@ -3,11 +3,13 @@ import { useTweet } from '../context/useTweet';
 import { changeStringToSlug } from '../helpers/slug-helper';
 
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { web3 } from '@project-serum/anchor';
-import { useAnchorWallet } from '@solana/wallet-adapter-react';
+// import { web3 } from '@project-serum/anchor';
+const anchor = require('@project-serum/anchor');
+import { useAnchorWallet, useWallet } from '@solana/wallet-adapter-react';
 
 function TweetInput() {
   const { tweet, setTweet, program } = useTweet();
+  // const wallet = useWallet();
   const wallet = useAnchorWallet();
   const [loading, setLoading] = useState(false);
 
@@ -27,16 +29,21 @@ function TweetInput() {
 
     setLoading(true);
 
-    const tweetKey = web3.Keypair.generate();
+    const tweetKey = anchor.web3.Keypair.generate();
 
-    console.log(tweet);
+    // console.log(tweet.topic, tweet.content);
+    // console.log(tweetKey.publicKey, wallet.publicKey);
+
+    const { topic, content } = tweet;
+
+    // console.log(typeof topic === 'string');
 
     try {
-      await program.rpc.sendTweet(tweet.topic, tweet.content, {
+      await program.rpc.sendTweet(topic, content, {
         accounts: {
-          author: wallet.publicKey,
           tweet: tweetKey.publicKey,
-          systemProgram: web3.SystemProgram.programId,
+          author: wallet.publicKey,
+          systemProgram: anchor.web3.SystemProgram.programId,
         },
         signers: [tweet],
       });

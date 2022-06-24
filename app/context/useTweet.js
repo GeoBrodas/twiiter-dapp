@@ -40,11 +40,7 @@ const ContextProvider = ({ children }) => {
   // const connection = new Connection(network, opts.preflightCommitment);
 
   const getProvider = () => {
-    const provider = new AnchorProvider(
-      connection,
-      wallet,
-      opts.preflightCommitment
-    );
+    const provider = new AnchorProvider(connection, wallet, opts);
     return provider;
   };
 
